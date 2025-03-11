@@ -2,8 +2,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/ud_laba_6_autogen.dir/AutogenUsed.txt"
   "CMakeFiles/ud_laba_6_autogen.dir/ParseCache.txt"
   "ud_laba_6_autogen"
-  "CMakeFiles/ud_laba_6.dir/createuserdialog.cpp.o"
-  "CMakeFiles/ud_laba_6.dir/createuserdialog.cpp.o.d"
   "CMakeFiles/ud_laba_6.dir/logindialog.cpp.o"
   "CMakeFiles/ud_laba_6.dir/logindialog.cpp.o.d"
   "CMakeFiles/ud_laba_6.dir/main.cpp.o"

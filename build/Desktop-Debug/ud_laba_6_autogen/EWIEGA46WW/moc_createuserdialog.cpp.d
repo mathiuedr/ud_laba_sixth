@@ -1,5 +1,6 @@
 /home/matthew/ud_laba_6/build/Desktop-Debug/ud_laba_6_autogen/EWIEGA46WW/moc_createuserdialog.cpp: /home/matthew/ud_laba_6/createuserdialog.h \
   /home/matthew/ud_laba_6/build/Desktop-Debug/ud_laba_6_autogen/moc_predefs.h \
+  /home/matthew/ud_laba_6/DatabaseManage.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
@@ -182,6 +183,18 @@
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
   /usr/include/locale.h \
+  /usr/include/postgresql/ecpg_config.h \
+  /usr/include/postgresql/ecpgerrno.h \
+  /usr/include/postgresql/ecpglib.h \
+  /usr/include/postgresql/ecpgtype.h \
+  /usr/include/postgresql/libpq-fe.h \
+  /usr/include/postgresql/pg_config_ext.h \
+  /usr/include/postgresql/pgtypes.h \
+  /usr/include/postgresql/pgtypes_date.h \
+  /usr/include/postgresql/pgtypes_interval.h \
+  /usr/include/postgresql/pgtypes_timestamp.h \
+  /usr/include/postgresql/postgres_ext.h \
+  /usr/include/postgresql/sqlca.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
   /usr/include/stdc-predef.h \
@@ -391,7 +404,9 @@
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qtransform.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qwindowdefs.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QDialog \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QMessageBox \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qdialog.h \
+  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qmessagebox.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qsizepolicy.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qtwidgets-config.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qtwidgetsexports.h \

@@ -1,7 +1,7 @@
 CMakeFiles/ud_laba_6.dir/ud_laba_6_autogen/mocs_compilation.cpp.o: \
  /home/matthew/ud_laba_6/build/Desktop-Debug/ud_laba_6_autogen/mocs_compilation.cpp \
  /usr/include/stdc-predef.h \
- /home/matthew/ud_laba_6/build/Desktop-Debug/ud_laba_6_autogen/EWIEGA46WW/moc_createuserdialog.cpp \
+ /home/matthew/ud_laba_6/build/Desktop-Debug/ud_laba_6_autogen/EWIEGA46WW/moc_logindialog.cpp \
  /usr/include/c++/13/memory /usr/include/c++/13/bits/memoryfwd.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
@@ -116,7 +116,7 @@ CMakeFiles/ud_laba_6.dir/ud_laba_6_autogen/mocs_compilation.cpp.o: \
  /usr/include/c++/13/backward/auto_ptr.h \
  /usr/include/c++/13/pstl/glue_memory_defs.h \
  /usr/include/c++/13/pstl/execution_defs.h \
- /home/matthew/ud_laba_6/build/Desktop-Debug/ud_laba_6_autogen/EWIEGA46WW/../../../../createuserdialog.h \
+ /home/matthew/ud_laba_6/build/Desktop-Debug/ud_laba_6_autogen/EWIEGA46WW/../../../../logindialog.h \
  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QDialog \
  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qdialog.h \
  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qtwidgetsglobal.h \
@@ -341,8 +341,6 @@ CMakeFiles/ud_laba_6.dir/ud_laba_6_autogen/mocs_compilation.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qsizepolicy.h \
  /usr/include/x86_64-linux-gnu/qt6/QtGui/qcursor.h \
  /usr/include/x86_64-linux-gnu/qt6/QtGui/qbitmap.h \
- /home/matthew/ud_laba_6/build/Desktop-Debug/ud_laba_6_autogen/EWIEGA46WW/moc_logindialog.cpp \
- /home/matthew/ud_laba_6/build/Desktop-Debug/ud_laba_6_autogen/EWIEGA46WW/../../../../logindialog.h \
  /home/matthew/ud_laba_6/build/Desktop-Debug/ud_laba_6_autogen/EWIEGA46WW/moc_mainwindow.cpp \
  /home/matthew/ud_laba_6/build/Desktop-Debug/ud_laba_6_autogen/EWIEGA46WW/../../../../mainwindow.h \
  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QMainWindow \

@@ -217,12 +217,6 @@
 			null
 		],
 		[
-			"/home/matthew/ud_laba_6/createuserdialog.h",
-			"MU",
-			"EWIEGA46WW/moc_createuserdialog.cpp",
-			null
-		],
-		[
 			"/home/matthew/ud_laba_6/logindialog.h",
 			"MU",
 			"EWIEGA46WW/moc_logindialog.cpp",
@@ -301,7 +295,6 @@
 	"SETTINGS_FILE" : "/home/matthew/ud_laba_6/build/Desktop-Debug/CMakeFiles/ud_laba_6_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
-		[ "/home/matthew/ud_laba_6/createuserdialog.cpp", "MU", null ],
 		[ "/home/matthew/ud_laba_6/logindialog.cpp", "MU", null ],
 		[ "/home/matthew/ud_laba_6/main.cpp", "MU", null ],
 		[ "/home/matthew/ud_laba_6/mainwindow.cpp", "MU", null ],

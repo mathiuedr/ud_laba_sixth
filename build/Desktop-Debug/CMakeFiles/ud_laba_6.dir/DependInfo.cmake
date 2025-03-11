@@ -9,7 +9,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "" "ud_laba_6_autogen/timestamp" "custom" "ud_laba_6_autogen/deps"
-  "/home/matthew/ud_laba_6/createuserdialog.cpp" "CMakeFiles/ud_laba_6.dir/createuserdialog.cpp.o" "gcc" "CMakeFiles/ud_laba_6.dir/createuserdialog.cpp.o.d"
   "/home/matthew/ud_laba_6/logindialog.cpp" "CMakeFiles/ud_laba_6.dir/logindialog.cpp.o" "gcc" "CMakeFiles/ud_laba_6.dir/logindialog.cpp.o.d"
   "/home/matthew/ud_laba_6/main.cpp" "CMakeFiles/ud_laba_6.dir/main.cpp.o" "gcc" "CMakeFiles/ud_laba_6.dir/main.cpp.o.d"
   "/home/matthew/ud_laba_6/mainwindow.cpp" "CMakeFiles/ud_laba_6.dir/mainwindow.cpp.o" "gcc" "CMakeFiles/ud_laba_6.dir/mainwindow.cpp.o.d"

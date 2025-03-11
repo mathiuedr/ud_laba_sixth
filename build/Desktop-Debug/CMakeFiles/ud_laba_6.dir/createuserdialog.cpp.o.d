@@ -335,6 +335,19 @@ CMakeFiles/ud_laba_6.dir/createuserdialog.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qsizepolicy.h \
  /usr/include/x86_64-linux-gnu/qt6/QtGui/qcursor.h \
  /usr/include/x86_64-linux-gnu/qt6/QtGui/qbitmap.h \
+ /home/matthew/ud_laba_6/DatabaseManage.h \
+ /usr/include/postgresql/ecpglib.h /usr/include/postgresql/ecpg_config.h \
+ /usr/include/postgresql/ecpgtype.h /usr/include/postgresql/libpq-fe.h \
+ /usr/include/postgresql/postgres_ext.h \
+ /usr/include/postgresql/pg_config_ext.h /usr/include/postgresql/sqlca.h \
+ /usr/include/postgresql/ecpgerrno.h /usr/include/postgresql/sqlca.h \
+ /usr/include/postgresql/pgtypes_date.h /usr/include/postgresql/pgtypes.h \
+ /usr/include/postgresql/pgtypes_timestamp.h \
+ /usr/include/postgresql/pgtypes_interval.h \
+ /usr/include/postgresql/ecpg_config.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QMessageBox \
+ /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qmessagebox.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qdialog.h \
  /home/matthew/ud_laba_6/build/Desktop-Debug/ud_laba_6_autogen/include/ui_createuserdialog.h \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/QVariant \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qvariant.h \

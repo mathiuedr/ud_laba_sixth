@@ -22,10 +22,10 @@ QT_BEGIN_NAMESPACE
 class Ui_CreateUserDialog
 {
 public:
-    QLineEdit *lineEdit;
+    QLineEdit *login_input;
     QLabel *label;
     QLabel *label_2;
-    QLineEdit *lineEdit_2;
+    QLineEdit *password_input;
     QLabel *label_3;
     QLabel *label_4;
     QLabel *label_5;
@@ -51,18 +51,18 @@ public:
         if (CreateUserDialog->objectName().isEmpty())
             CreateUserDialog->setObjectName("CreateUserDialog");
         CreateUserDialog->resize(400, 456);
-        lineEdit = new QLineEdit(CreateUserDialog);
-        lineEdit->setObjectName("lineEdit");
-        lineEdit->setGeometry(QRect(10, 40, 113, 26));
+        login_input = new QLineEdit(CreateUserDialog);
+        login_input->setObjectName("login_input");
+        login_input->setGeometry(QRect(10, 40, 113, 26));
         label = new QLabel(CreateUserDialog);
         label->setObjectName("label");
         label->setGeometry(QRect(20, 10, 66, 18));
         label_2 = new QLabel(CreateUserDialog);
         label_2->setObjectName("label_2");
         label_2->setGeometry(QRect(170, 10, 66, 18));
-        lineEdit_2 = new QLineEdit(CreateUserDialog);
-        lineEdit_2->setObjectName("lineEdit_2");
-        lineEdit_2->setGeometry(QRect(160, 40, 113, 26));
+        password_input = new QLineEdit(CreateUserDialog);
+        password_input->setObjectName("password_input");
+        password_input->setGeometry(QRect(160, 40, 113, 26));
         label_3 = new QLabel(CreateUserDialog);
         label_3->setObjectName("label_3");
         label_3->setGeometry(QRect(10, 90, 161, 18));

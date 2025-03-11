@@ -5,8 +5,6 @@ ud_laba_6_autogen/timestamp: \
 	/home/matthew/ud_laba_6/build/Desktop-Debug/CMakeFiles/3.28.3/CMakeCXXCompiler.cmake \
 	/home/matthew/ud_laba_6/build/Desktop-Debug/CMakeFiles/3.28.3/CMakeSystem.cmake \
 	/home/matthew/ud_laba_6/build/Desktop-Debug/ud_laba_6_autogen/moc_predefs.h \
-	/home/matthew/ud_laba_6/createuserdialog.cpp \
-	/home/matthew/ud_laba_6/createuserdialog.h \
 	/home/matthew/ud_laba_6/logindialog.cpp \
 	/home/matthew/ud_laba_6/logindialog.h \
 	/home/matthew/ud_laba_6/main.cpp \
@@ -549,7 +547,6 @@ ud_laba_6_autogen/timestamp: \
 	/usr/share/cmake-3.28/Modules/Platform/Linux.cmake \
 	/usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake \
 	/usr/share/cmake-3.28/Modules/SelectLibraryConfigurations.cmake \
-	/home/matthew/ud_laba_6/createuserdialog.ui \
 	/home/matthew/ud_laba_6/logindialog.ui \
 	/home/matthew/ud_laba_6/mainwindow.ui \
 	/home/matthew/ud_laba_6/startdialog.ui \

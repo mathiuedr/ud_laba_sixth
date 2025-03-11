@@ -200,30 +200,6 @@ ud_laba_6_autogen/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ud_laba_6_autogen.dir/build.make CMakeFiles/ud_laba_6_autogen.dir/build
 .PHONY : ud_laba_6_autogen/fast
 
-createuserdialog.o: createuserdialog.cpp.o
-.PHONY : createuserdialog.o
-
-# target to build an object file
-createuserdialog.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ud_laba_6.dir/build.make CMakeFiles/ud_laba_6.dir/createuserdialog.cpp.o
-.PHONY : createuserdialog.cpp.o
-
-createuserdialog.i: createuserdialog.cpp.i
-.PHONY : createuserdialog.i
-
-# target to preprocess a source file
-createuserdialog.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ud_laba_6.dir/build.make CMakeFiles/ud_laba_6.dir/createuserdialog.cpp.i
-.PHONY : createuserdialog.cpp.i
-
-createuserdialog.s: createuserdialog.cpp.s
-.PHONY : createuserdialog.s
-
-# target to generate assembly for a file
-createuserdialog.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ud_laba_6.dir/build.make CMakeFiles/ud_laba_6.dir/createuserdialog.cpp.s
-.PHONY : createuserdialog.cpp.s
-
 logindialog.o: logindialog.cpp.o
 .PHONY : logindialog.o
 
@@ -359,9 +335,6 @@ help:
 	@echo "... ud_laba_6_autogen"
 	@echo "... ud_laba_6_autogen_timestamp_deps"
 	@echo "... ud_laba_6"
-	@echo "... createuserdialog.o"
-	@echo "... createuserdialog.i"
-	@echo "... createuserdialog.s"
 	@echo "... logindialog.o"
 	@echo "... logindialog.i"
 	@echo "... logindialog.s"

@@ -31,7 +31,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         logindialog.h logindialog.cpp logindialog.ui
         mainwindow.h mainwindow.cpp mainwindow.ui
-        createuserdialog.h createuserdialog.cpp createuserdialog.ui
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET ud_laba_6 APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

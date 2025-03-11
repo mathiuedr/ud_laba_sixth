@@ -1,6 +1,5 @@
 #ifndef DATABASE_MANAGE_H
 #define DATABASE_MANAGE_H
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -11,7 +10,7 @@ extern "C" {
 #include <sqlca.h>
 /* End of automatic include section */
 
-#line 1 "../DatabaseManage.pgc"
+#line 1 "DatabaseManage.pgc"
 #include <stdio.h>
 #include <string.h>
 #include <pgtypes_date.h>  // Для работы с типом date
@@ -67,28 +66,28 @@ int connect_to_db(const char *username, const char *password) {
 
 
 
-#line 52 "../DatabaseManage.pgc"
+#line 52 "DatabaseManage.pgc"
     const char * conn_str = "library" ;
 
-#line 53 "../DatabaseManage.pgc"
+#line 53 "DatabaseManage.pgc"
     const char * user = username ;
 
-#line 54 "../DatabaseManage.pgc"
+#line 54 "DatabaseManage.pgc"
     const char * pass = password ;
 /* exec sql end declare section */
-#line 55 "../DatabaseManage.pgc"
+#line 55 "DatabaseManage.pgc"
 
 
     /* exec sql whenever sqlerror  goto  error_handler ; */
-#line 57 "../DatabaseManage.pgc"
+#line 57 "DatabaseManage.pgc"
 
 
     // Подключение к базе данных
     { ECPGconnect(__LINE__, 0, conn_str , user , pass , NULL, 0);
-#line 60 "../DatabaseManage.pgc"
+#line 60 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 60 "../DatabaseManage.pgc"
+#line 60 "DatabaseManage.pgc"
 
     printf("Connected to the database.\n");
     return 0;
@@ -99,13 +98,13 @@ error_handler:
 
 int disconnect_from_db(){
     /* exec sql whenever sqlerror  goto  error_handler ; */
-#line 69 "../DatabaseManage.pgc"
+#line 69 "DatabaseManage.pgc"
 
     { ECPGdisconnect(__LINE__, "CURRENT");
-#line 70 "../DatabaseManage.pgc"
+#line 70 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 70 "../DatabaseManage.pgc"
+#line 70 "DatabaseManage.pgc"
 
     printf("Disconnected from the database.\n");
     return 0;
@@ -117,29 +116,29 @@ error_handler:
 // Создание базы данных
 int create_db() {
     /* exec sql whenever sqlerror  goto  error_handler ; */
-#line 80 "../DatabaseManage.pgc"
+#line 80 "DatabaseManage.pgc"
 
     { ECPGdo(__LINE__, 0, 1, NULL, 0, ECPGst_normal, "call create_db ( )", ECPGt_EOIT, ECPGt_EORT);
-#line 81 "../DatabaseManage.pgc"
+#line 81 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 81 "../DatabaseManage.pgc"
+#line 81 "DatabaseManage.pgc"
 
     { ECPGtrans(__LINE__, NULL, "commit");
-#line 82 "../DatabaseManage.pgc"
+#line 82 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 82 "../DatabaseManage.pgc"
+#line 82 "DatabaseManage.pgc"
 
     printf("Database created successfully.\n");
     return 0;
 
 error_handler:
 { ECPGtrans(__LINE__, NULL, "rollback");
-#line 87 "../DatabaseManage.pgc"
+#line 87 "DatabaseManage.pgc"
 
     if (sqlca.sqlcode < 0) goto error_handler;}
-#line 87 "../DatabaseManage.pgc"
+#line 87 "DatabaseManage.pgc"
 
     return -1;
 }
@@ -147,29 +146,29 @@ error_handler:
 // Удаление базы данных
 int drop_db() {
     /* exec sql whenever sqlerror  goto  error_handler ; */
-#line 93 "../DatabaseManage.pgc"
+#line 93 "DatabaseManage.pgc"
 
     { ECPGdo(__LINE__, 0, 1, NULL, 0, ECPGst_normal, "call drop_db ( )", ECPGt_EOIT, ECPGt_EORT);
-#line 94 "../DatabaseManage.pgc"
+#line 94 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 94 "../DatabaseManage.pgc"
+#line 94 "DatabaseManage.pgc"
 
     { ECPGtrans(__LINE__, NULL, "commit");
-#line 95 "../DatabaseManage.pgc"
+#line 95 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 95 "../DatabaseManage.pgc"
+#line 95 "DatabaseManage.pgc"
 
     printf("Database dropped successfully.\n");
     return 0;
 
 error_handler:
 { ECPGtrans(__LINE__, NULL, "rollback");
-#line 100 "../DatabaseManage.pgc"
+#line 100 "DatabaseManage.pgc"
 
     if (sqlca.sqlcode < 0) goto error_handler;}
-#line 100 "../DatabaseManage.pgc"
+#line 100 "DatabaseManage.pgc"
 
     return -1;
 }
@@ -177,29 +176,29 @@ error_handler:
 // Очистка таблиц
 int clear_db() {
     /* exec sql whenever sqlerror  goto  error_handler ; */
-#line 106 "../DatabaseManage.pgc"
+#line 106 "DatabaseManage.pgc"
 
     { ECPGdo(__LINE__, 0, 1, NULL, 0, ECPGst_normal, "call clear_table ( )", ECPGt_EOIT, ECPGt_EORT);
-#line 107 "../DatabaseManage.pgc"
+#line 107 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 107 "../DatabaseManage.pgc"
+#line 107 "DatabaseManage.pgc"
 
     { ECPGtrans(__LINE__, NULL, "commit");
-#line 108 "../DatabaseManage.pgc"
+#line 108 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 108 "../DatabaseManage.pgc"
+#line 108 "DatabaseManage.pgc"
 
     printf("Tables cleared successfully.\n");
     return 0;
 
 error_handler:
 { ECPGtrans(__LINE__, NULL, "rollback");
-#line 113 "../DatabaseManage.pgc"
+#line 113 "DatabaseManage.pgc"
 
     if (sqlca.sqlcode < 0) goto error_handler;}
-#line 113 "../DatabaseManage.pgc"
+#line 113 "DatabaseManage.pgc"
 
     return -1;
 }
@@ -213,26 +212,26 @@ int insert_book(const char *isbn_inp, const char *book_name_inp, const char *des
     /* exec sql begin declare section */
     // ISBN (13 символов + \0)
 
-// Описание (TEXT)
-// Дата публикации
+    // Описание (TEXT)
+    // Дата публикации
 
 
-#line 124 "../DatabaseManage.pgc"
+#line 124 "DatabaseManage.pgc"
     char isbn [ 14 ] ;
 
-#line 125 "../DatabaseManage.pgc"
+#line 125 "DatabaseManage.pgc"
     char book_name [ 256 ] ;
 
-#line 126 "../DatabaseManage.pgc"
+#line 126 "DatabaseManage.pgc"
     char description [ 4096 ] ;
 
-#line 127 "../DatabaseManage.pgc"
+#line 127 "DatabaseManage.pgc"
     date pub_date ;
 
-#line 128 "../DatabaseManage.pgc"
+#line 128 "DatabaseManage.pgc"
     char author_name [ 256 ] ;
 /* exec sql end declare section */
-#line 129 "../DatabaseManage.pgc"
+#line 129 "DatabaseManage.pgc"
 
 
     // Копируем данные в переменные ESQL
@@ -249,7 +248,7 @@ int insert_book(const char *isbn_inp, const char *book_name_inp, const char *des
     pub_date = PGTYPESdate_from_asc((char *)publication_date, NULL);
 
     /* exec sql whenever sqlerror  goto  error_handler ; */
-#line 144 "../DatabaseManage.pgc"
+#line 144 "DatabaseManage.pgc"
 
 
     // Вызов хранимой процедуры
@@ -264,18 +263,18 @@ int insert_book(const char *isbn_inp, const char *book_name_inp, const char *des
                ECPGt_NO_INDICATOR, NULL , 0L, 0L, 0L,
                ECPGt_char,(author_name),(long)256,(long)1,(256)*sizeof(char),
                ECPGt_NO_INDICATOR, NULL , 0L, 0L, 0L, ECPGt_EOIT, ECPGt_EORT);
-#line 147 "../DatabaseManage.pgc"
+#line 147 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 147 "../DatabaseManage.pgc"
+#line 147 "DatabaseManage.pgc"
 
 
     // Завершаем транзакцию
     { ECPGtrans(__LINE__, NULL, "commit");
-#line 150 "../DatabaseManage.pgc"
+#line 150 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 150 "../DatabaseManage.pgc"
+#line 150 "DatabaseManage.pgc"
 
 
     printf("Book inserted successfully.\n");
@@ -284,10 +283,10 @@ int insert_book(const char *isbn_inp, const char *book_name_inp, const char *des
 error_handler:
     printf("Error inserting book: SQLCODE=%d, SQLERRM=%s\n", sqlca.sqlcode, sqlca.sqlerrm.sqlerrmc);
     { ECPGtrans(__LINE__, NULL, "rollback");
-#line 157 "../DatabaseManage.pgc"
+#line 157 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 157 "../DatabaseManage.pgc"
+#line 157 "DatabaseManage.pgc"
     // Откатываем транзакцию в случае ошибки
     return -1;
 }
@@ -305,30 +304,30 @@ char* search_books_by_author_name(const char *author_name) {
     // Название книги
     // Описание
 
-// Дата публикации
+    // Дата публикации
 
-#line 168 "../DatabaseManage.pgc"
+#line 168 "DatabaseManage.pgc"
     char author [ 256 ] ;
 
-#line 169 "../DatabaseManage.pgc"
+#line 169 "DatabaseManage.pgc"
     int book_id ;
 
-#line 170 "../DatabaseManage.pgc"
+#line 170 "DatabaseManage.pgc"
     char isbn [ 14 ] ;
 
-#line 171 "../DatabaseManage.pgc"
+#line 171 "DatabaseManage.pgc"
     char book_name [ 256 ] ;
 
-#line 172 "../DatabaseManage.pgc"
+#line 172 "DatabaseManage.pgc"
     char description [ 4096 ] ;
 
-#line 173 "../DatabaseManage.pgc"
+#line 173 "DatabaseManage.pgc"
     date pub_date ;
 
-#line 174 "../DatabaseManage.pgc"
+#line 174 "DatabaseManage.pgc"
     char goida [ 256 ] ;
 /* exec sql end declare section */
-#line 175 "../DatabaseManage.pgc"
+#line 175 "DatabaseManage.pgc"
 
 
     // Копируем имя автора в переменную ESQL
@@ -344,28 +343,28 @@ char* search_books_by_author_name(const char *author_name) {
     result[0] = '\0';  // Инициализируем пустую строку
 
     /* exec sql whenever sqlerror  goto  error_handler ; */
-#line 189 "../DatabaseManage.pgc"
+#line 189 "DatabaseManage.pgc"
 
 
     // Объявляем курсор для выборки данных
     ECPGset_var( 0, ( author ), __LINE__);\
     /* declare book_cursor cursor for select * from search_books_by_author_name ( $1  ) */
-#line 193 "../DatabaseManage.pgc"
+#line 193 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;
-#line 193 "../DatabaseManage.pgc"
+#line 193 "DatabaseManage.pgc"
 
-#line 193 "../DatabaseManage.pgc"
+#line 193 "DatabaseManage.pgc"
         // Явно указываем тип
 
     // Открываем курсор
     { ECPGdo(__LINE__, 0, 1, NULL, 0, ECPGst_normal, "declare book_cursor cursor for select * from search_books_by_author_name ( $1  )",
                ECPGt_char,(author),(long)256,(long)1,(256)*sizeof(char),
                ECPGt_NO_INDICATOR, NULL , 0L, 0L, 0L, ECPGt_EOIT, ECPGt_EORT);
-#line 196 "../DatabaseManage.pgc"
+#line 196 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 196 "../DatabaseManage.pgc"
+#line 196 "DatabaseManage.pgc"
 
 
     // Читаем данные из курсора
@@ -383,18 +382,18 @@ char* search_books_by_author_name(const char *author_name) {
                    ECPGt_NO_INDICATOR, NULL , 0L, 0L, 0L,
                    ECPGt_char,(goida),(long)256,(long)1,(256)*sizeof(char),
                    ECPGt_NO_INDICATOR, NULL , 0L, 0L, 0L, ECPGt_EORT);
-#line 200 "../DatabaseManage.pgc"
+#line 200 "DatabaseManage.pgc"
 
             if (sqlca.sqlcode < 0) goto error_handler;}
-#line 200 "../DatabaseManage.pgc"
+#line 200 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode == 100) break;  // Конец данных
         if (sqlca.sqlcode != 0) goto error_handler;
 
         // Формируем строку с информацией о книге
         char book_info[512];
-        snprintf(book_info, sizeof(book_info), "ID: %d, ISBN: %s, Name: %s, Description: %s\n",
-                 book_id, isbn, book_name, description);
+        snprintf(book_info, sizeof(book_info), "ID: %d, ISBN: %s, Name: %s, Description: %s, Date: %s\n",
+                 book_id, isbn, book_name, description, PGTYPESdate_to_asc(pub_date));
 
         // Увеличиваем размер результата и добавляем информацию о книге
         size_t new_length = strlen(result) + strlen(book_info) + 1;
@@ -408,10 +407,10 @@ char* search_books_by_author_name(const char *author_name) {
 
     // Закрываем курсор
     { ECPGdo(__LINE__, 0, 1, NULL, 0, ECPGst_normal, "close book_cursor", ECPGt_EOIT, ECPGt_EORT);
-#line 220 "../DatabaseManage.pgc"
+#line 220 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 220 "../DatabaseManage.pgc"
+#line 220 "DatabaseManage.pgc"
 
 
     return result;
@@ -423,10 +422,11 @@ error_handler:
 }
 
 int update_book_by_id(int book_id, const char *isbn_inp, const char *book_name_inp, const char *description_inp, const char *publication_date, const char *author_name_inp) {
-    if(book_id<0) return 1;
+    if(book_id < 0) return 1;
     if (!validate_cortege(isbn_inp, book_name_inp, description_inp, publication_date, author_name_inp)) {
         return 1;
     }
+
     /* exec sql begin declare section */
 
 
@@ -434,37 +434,48 @@ int update_book_by_id(int book_id, const char *isbn_inp, const char *book_name_i
 
 
 
+    // Временная строка для даты
 
-#line 236 "../DatabaseManage.pgc"
+#line 237 "DatabaseManage.pgc"
     int id = book_id ;
 
-#line 237 "../DatabaseManage.pgc"
+#line 238 "DatabaseManage.pgc"
     char isbn [ 14 ] ;
 
-#line 238 "../DatabaseManage.pgc"
+#line 239 "DatabaseManage.pgc"
     char book_name [ 256 ] ;
 
-#line 239 "../DatabaseManage.pgc"
+#line 240 "DatabaseManage.pgc"
     char description [ 4096 ] ;
 
-#line 240 "../DatabaseManage.pgc"
+#line 241 "DatabaseManage.pgc"
     date pub_date ;
 
-#line 241 "../DatabaseManage.pgc"
+#line 242 "DatabaseManage.pgc"
     char author_name [ 256 ] ;
+
+#line 243 "DatabaseManage.pgc"
+    char pub_date_str [ 256 ] ;
 /* exec sql end declare section */
-#line 242 "../DatabaseManage.pgc"
+#line 244 "DatabaseManage.pgc"
 
 
     strncpy(isbn, isbn_inp, sizeof(isbn) - 1);
+    isbn[sizeof(isbn) - 1] = '\0';
     strncpy(book_name, book_name_inp, sizeof(book_name) - 1);
+    book_name[sizeof(book_name) - 1] = '\0';
     strncpy(description, description_inp, sizeof(description) - 1);
+    description[sizeof(description) - 1] = '\0';
     strncpy(author_name, author_name_inp, sizeof(author_name) - 1);
+    author_name[sizeof(author_name) - 1] = '\0';
 
-    pub_date = PGTYPESdate_from_asc(publication_date, NULL);
+    // Копируем дату во временную строку
+    strncpy(pub_date_str, publication_date, sizeof(pub_date_str) - 1);
+    pub_date_str[sizeof(pub_date_str) - 1] = '\0';
+    pub_date = PGTYPESdate_from_asc(pub_date_str, NULL);
 
     /* exec sql whenever sqlerror  goto  error_handler ; */
-#line 251 "../DatabaseManage.pgc"
+#line 260 "DatabaseManage.pgc"
 
 
     // Вызов хранимой процедуры
@@ -481,16 +492,16 @@ int update_book_by_id(int book_id, const char *isbn_inp, const char *book_name_i
                ECPGt_NO_INDICATOR, NULL , 0L, 0L, 0L,
                ECPGt_char,(author_name),(long)256,(long)1,(256)*sizeof(char),
                ECPGt_NO_INDICATOR, NULL , 0L, 0L, 0L, ECPGt_EOIT, ECPGt_EORT);
-#line 254 "../DatabaseManage.pgc"
+#line 263 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 254 "../DatabaseManage.pgc"
+#line 263 "DatabaseManage.pgc"
 
     { ECPGtrans(__LINE__, NULL, "commit");
-#line 255 "../DatabaseManage.pgc"
+#line 264 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 255 "../DatabaseManage.pgc"
+#line 264 "DatabaseManage.pgc"
 
 
     printf("Book updated successfully.\n");
@@ -498,11 +509,12 @@ int update_book_by_id(int book_id, const char *isbn_inp, const char *book_name_i
 
 error_handler:
 { ECPGtrans(__LINE__, NULL, "rollback");
-#line 261 "../DatabaseManage.pgc"
+#line 270 "DatabaseManage.pgc"
 
     if (sqlca.sqlcode < 0) goto error_handler;}
-#line 261 "../DatabaseManage.pgc"
+#line 270 "DatabaseManage.pgc"
 
+    printf("Error updating book: SQLCODE=%ld, SQLERRM=%s\n", (long)sqlca.sqlcode, sqlca.sqlerrm.sqlerrmc);
     return -1;
 }
 
@@ -511,42 +523,42 @@ int delete_book_by_name(const char *book_name) {
         /* exec sql begin declare section */
 
 
-#line 268 "../DatabaseManage.pgc"
+#line 278 "DatabaseManage.pgc"
     char name [ 256 ] ;
 /* exec sql end declare section */
-#line 269 "../DatabaseManage.pgc"
+#line 279 "DatabaseManage.pgc"
 
 
     strncpy(name, book_name, sizeof(name) - 1);
 
     /* exec sql whenever sqlerror  goto  error_handler ; */
-#line 273 "../DatabaseManage.pgc"
+#line 283 "DatabaseManage.pgc"
 
 
     // Вызов хранимой процедуры
     { ECPGdo(__LINE__, 0, 1, NULL, 0, ECPGst_normal, "call delete_book_by_name ( $1  )",
                ECPGt_char,(name),(long)256,(long)1,(256)*sizeof(char),
                ECPGt_NO_INDICATOR, NULL , 0L, 0L, 0L, ECPGt_EOIT, ECPGt_EORT);
-#line 276 "../DatabaseManage.pgc"
+#line 286 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 276 "../DatabaseManage.pgc"
+#line 286 "DatabaseManage.pgc"
 
     { ECPGtrans(__LINE__, NULL, "commit");
-#line 277 "../DatabaseManage.pgc"
+#line 287 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 277 "../DatabaseManage.pgc"
+#line 287 "DatabaseManage.pgc"
 
     printf("Book deleted successfully.\n");
     return 0;
 
 error_handler:
 { ECPGtrans(__LINE__, NULL, "rollback");
-#line 282 "../DatabaseManage.pgc"
+#line 292 "DatabaseManage.pgc"
 
     if (sqlca.sqlcode < 0) goto error_handler;}
-#line 282 "../DatabaseManage.pgc"
+#line 292 "DatabaseManage.pgc"
 
     return -1;
 }
@@ -557,13 +569,13 @@ void grant_user_on_procedure(const char *procedure_name, const char *username) {
     // Имя процедуры
     // Имя пользователя
 
-#line 289 "../DatabaseManage.pgc"
+#line 299 "DatabaseManage.pgc"
     char proc_name [ 256 ] ;
 
-#line 290 "../DatabaseManage.pgc"
+#line 300 "DatabaseManage.pgc"
     char user [ 256 ] ;
 /* exec sql end declare section */
-#line 291 "../DatabaseManage.pgc"
+#line 301 "DatabaseManage.pgc"
 
 
     // Копируем входные данные в переменные ESQL
@@ -573,7 +585,7 @@ void grant_user_on_procedure(const char *procedure_name, const char *username) {
     user[sizeof(user) - 1] = '\0';
 
     /* exec sql whenever sqlerror  goto  error_handler ; */
-#line 299 "../DatabaseManage.pgc"
+#line 309 "DatabaseManage.pgc"
 
 
     // Вызов хранимой процедуры
@@ -582,26 +594,26 @@ void grant_user_on_procedure(const char *procedure_name, const char *username) {
                ECPGt_NO_INDICATOR, NULL , 0L, 0L, 0L,
                ECPGt_char,(user),(long)256,(long)1,(256)*sizeof(char),
                ECPGt_NO_INDICATOR, NULL , 0L, 0L, 0L, ECPGt_EOIT, ECPGt_EORT);
-#line 302 "../DatabaseManage.pgc"
+#line 312 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 302 "../DatabaseManage.pgc"
+#line 312 "DatabaseManage.pgc"
 
     { ECPGtrans(__LINE__, NULL, "commit");
-#line 303 "../DatabaseManage.pgc"
+#line 313 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 303 "../DatabaseManage.pgc"
+#line 313 "DatabaseManage.pgc"
 
     printf("Procedure '%s' granted to user '%s' successfully.\n", proc_name, user);
     return;
 
 error_handler:
 { ECPGtrans(__LINE__, NULL, "rollback");
-#line 308 "../DatabaseManage.pgc"
+#line 318 "DatabaseManage.pgc"
 
     if (sqlca.sqlcode < 0) goto error_handler;}
-#line 308 "../DatabaseManage.pgc"
+#line 318 "DatabaseManage.pgc"
 
     printf("Error granting procedure: SQLCODE=%d, SQLERRM=%s\n", sqlca.sqlcode, sqlca.sqlerrm.sqlerrmc);
 }
@@ -611,13 +623,13 @@ void grant_user_on_function(const char *procedure_name, const char *username) {
     // Имя процедуры
     // Имя пользователя
 
-#line 314 "../DatabaseManage.pgc"
+#line 324 "DatabaseManage.pgc"
     char proc_name [ 256 ] ;
 
-#line 315 "../DatabaseManage.pgc"
+#line 325 "DatabaseManage.pgc"
     char user [ 256 ] ;
 /* exec sql end declare section */
-#line 316 "../DatabaseManage.pgc"
+#line 326 "DatabaseManage.pgc"
 
 
     // Копируем входные данные в переменные ESQL
@@ -627,7 +639,7 @@ void grant_user_on_function(const char *procedure_name, const char *username) {
     user[sizeof(user) - 1] = '\0';
 
     /* exec sql whenever sqlerror  goto  error_handler ; */
-#line 324 "../DatabaseManage.pgc"
+#line 334 "DatabaseManage.pgc"
 
 
     // Вызов хранимой процедуры
@@ -636,16 +648,16 @@ void grant_user_on_function(const char *procedure_name, const char *username) {
                ECPGt_NO_INDICATOR, NULL , 0L, 0L, 0L,
                ECPGt_char,(user),(long)256,(long)1,(256)*sizeof(char),
                ECPGt_NO_INDICATOR, NULL , 0L, 0L, 0L, ECPGt_EOIT, ECPGt_EORT);
-#line 327 "../DatabaseManage.pgc"
+#line 337 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 327 "../DatabaseManage.pgc"
+#line 337 "DatabaseManage.pgc"
 
     { ECPGtrans(__LINE__, NULL, "commit");
-#line 328 "../DatabaseManage.pgc"
+#line 338 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 328 "../DatabaseManage.pgc"
+#line 338 "DatabaseManage.pgc"
 
     printf("Procedure '%s' granted to user '%s' successfully.\n", proc_name, user);
 
@@ -653,41 +665,51 @@ void grant_user_on_function(const char *procedure_name, const char *username) {
 
 error_handler:
 { ECPGtrans(__LINE__, NULL, "rollback");
-#line 334 "../DatabaseManage.pgc"
+#line 344 "DatabaseManage.pgc"
 
     if (sqlca.sqlcode < 0) goto error_handler;}
-#line 334 "../DatabaseManage.pgc"
+#line 344 "DatabaseManage.pgc"
 
     printf("Error granting procedure: SQLCODE=%d, SQLERRM=%s\n", sqlca.sqlcode, sqlca.sqlerrm.sqlerrmc);
 }
 
 
-int create_user(char* login, char* password, bool create_db_right, bool delete_db_right,bool clear_db_right,
+int create_user(const char* login,const char* password, bool create_db_right, bool delete_db_right,bool clear_db_right,
                 bool insert_right, bool search_right, bool update_right, bool delete_right, bool create_user_right){
     /* exec sql whenever sqlerror  goto  error_handler ; */
-#line 341 "../DatabaseManage.pgc"
+#line 351 "DatabaseManage.pgc"
 
     /* exec sql begin declare section */
 
 
 
-#line 343 "../DatabaseManage.pgc"
+#line 353 "DatabaseManage.pgc"
     char name [ 256 ] ;
 
-#line 344 "../DatabaseManage.pgc"
+#line 354 "DatabaseManage.pgc"
     char user_password [ 256 ] ;
 /* exec sql end declare section */
-#line 345 "../DatabaseManage.pgc"
+#line 355 "DatabaseManage.pgc"
 
+    strncpy(name, login, sizeof(name) - 1);
+    name[sizeof(name) - 1] = '\0';  // Убедимся, что строка завершена
+    strncpy(user_password, password, sizeof(user_password) - 1);
+    user_password[sizeof(user_password) - 1] = '\0';
     { ECPGdo(__LINE__, 0, 1, NULL, 0, ECPGst_normal, "call create_user ( $1  , $2  )",
                ECPGt_char,(name),(long)256,(long)1,(256)*sizeof(char),
                ECPGt_NO_INDICATOR, NULL , 0L, 0L, 0L,
                ECPGt_char,(user_password),(long)256,(long)1,(256)*sizeof(char),
                ECPGt_NO_INDICATOR, NULL , 0L, 0L, 0L, ECPGt_EOIT, ECPGt_EORT);
-#line 346 "../DatabaseManage.pgc"
+#line 360 "DatabaseManage.pgc"
 
         if (sqlca.sqlcode < 0) goto error_handler;}
-#line 346 "../DatabaseManage.pgc"
+#line 360 "DatabaseManage.pgc"
+
+    { ECPGtrans(__LINE__, NULL, "commit");
+#line 361 "DatabaseManage.pgc"
+
+        if (sqlca.sqlcode < 0) goto error_handler;}
+#line 361 "DatabaseManage.pgc"
 
     if(create_db_right){
         grant_user_on_procedure("create_db", login);
@@ -715,22 +737,19 @@ int create_user(char* login, char* password, bool create_db_right, bool delete_d
         grant_user_on_procedure("grant_user_on_function", login);
         grant_user_on_procedure("grant_user_on_procedure", login);
     }
-    { ECPGtrans(__LINE__, NULL, "commit");
-#line 373 "../DatabaseManage.pgc"
-
-        if (sqlca.sqlcode < 0) goto error_handler;}
-#line 373 "../DatabaseManage.pgc"
-
-
+    return 0;
 error_handler:
 { ECPGtrans(__LINE__, NULL, "rollback");
-#line 376 "../DatabaseManage.pgc"
+#line 390 "DatabaseManage.pgc"
 
     if (sqlca.sqlcode < 0) goto error_handler;}
-#line 376 "../DatabaseManage.pgc"
+#line 390 "DatabaseManage.pgc"
 
     return -1;
 }
+
+
+
 
 
 #ifdef __cplusplus

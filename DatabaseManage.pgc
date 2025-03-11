@@ -203,8 +203,8 @@ char* search_books_by_author_name(const char *author_name) {
 
         // Формируем строку с информацией о книге
         char book_info[512];
-        snprintf(book_info, sizeof(book_info), "ID: %d, ISBN: %s, Name: %s, Description: %s\n",
-                 book_id, isbn, book_name, description);
+        snprintf(book_info, sizeof(book_info), "ID: %d, ISBN: %s, Name: %s, Description: %s, Date: %s\n",
+                 book_id, isbn, book_name, description, PGTYPESdate_to_asc(pub_date));
 
         // Увеличиваем размер результата и добавляем информацию о книге
         size_t new_length = strlen(result) + strlen(book_info) + 1;
@@ -228,25 +228,34 @@ error_handler:
 }
 
 int update_book_by_id(int book_id, const char *isbn_inp, const char *book_name_inp, const char *description_inp, const char *publication_date, const char *author_name_inp) {
-	if(book_id<0) return 1;
-	if (!validate_cortege(isbn_inp, book_name_inp, description_inp, publication_date, author_name_inp)) {
+    if(book_id < 0) return 1;
+    if (!validate_cortege(isbn_inp, book_name_inp, description_inp, publication_date, author_name_inp)) {
         return 1;
     }
+
     exec sql begin declare section;
-        int id = book_id;
-        char isbn[14];
-        char book_name[256];
-        char description[4096];
-        date pub_date;
-        char author_name[256];
+    int id = book_id;
+    char isbn[14];
+    char book_name[256];
+    char description[4096];
+    date pub_date;
+    char author_name[256];
+    char pub_date_str[256];  // Временная строка для даты
     exec sql end declare section;
 
     strncpy(isbn, isbn_inp, sizeof(isbn) - 1);
+    isbn[sizeof(isbn) - 1] = '\0';
     strncpy(book_name, book_name_inp, sizeof(book_name) - 1);
+    book_name[sizeof(book_name) - 1] = '\0';
     strncpy(description, description_inp, sizeof(description) - 1);
+    description[sizeof(description) - 1] = '\0';
     strncpy(author_name, author_name_inp, sizeof(author_name) - 1);
+    author_name[sizeof(author_name) - 1] = '\0';
 
-    pub_date = PGTYPESdate_from_asc(publication_date, NULL);
+    // Копируем дату во временную строку
+    strncpy(pub_date_str, publication_date, sizeof(pub_date_str) - 1);
+    pub_date_str[sizeof(pub_date_str) - 1] = '\0';
+    pub_date = PGTYPESdate_from_asc(pub_date_str, NULL);
 
     exec sql whenever sqlerror goto error_handler;
 
@@ -259,6 +268,7 @@ int update_book_by_id(int book_id, const char *isbn_inp, const char *book_name_i
 
 error_handler:
     exec sql rollback;
+    printf("Error updating book: SQLCODE=%ld, SQLERRM=%s\n", (long)sqlca.sqlcode, sqlca.sqlerrm.sqlerrmc);
     return -1;
 }
 
@@ -323,7 +333,6 @@ void grant_user_on_function(const char *procedure_name, const char *username) {
 
     exec sql whenever sqlerror goto error_handler;
 
-    // Вызов хранимой процедуры
     exec sql call grant_user_on_function(:proc_name, :user);
     exec sql commit;
     printf("Procedure '%s' granted to user '%s' successfully.\n", proc_name, user);
@@ -336,14 +345,19 @@ error_handler:
 }
 
 
-int create_user(char* login, char* password, bool create_db_right, bool delete_db_right,bool clear_db_right,
+int create_user(const char* login,const char* password, bool create_db_right, bool delete_db_right,bool clear_db_right,
 bool insert_right, bool search_right, bool update_right, bool delete_right, bool create_user_right){
 	exec sql whenever sqlerror goto error_handler;
 	exec sql begin declare section;
         char name[256];
 		char user_password[256];
     exec sql end declare section;
+        strncpy(name, login, sizeof(name) - 1);
+        name[sizeof(name) - 1] = '\0';  // Убедимся, что строка завершена
+        strncpy(user_password, password, sizeof(user_password) - 1);
+        user_password[sizeof(user_password) - 1] = '\0';
 	exec sql call create_user(:name, :user_password);
+    exec sql commit;
 	if(create_db_right){
 		grant_user_on_procedure("create_db", login);
 	}
@@ -370,8 +384,7 @@ bool insert_right, bool search_right, bool update_right, bool delete_right, bool
 		grant_user_on_procedure("grant_user_on_function", login);
 		grant_user_on_procedure("grant_user_on_procedure", login);
 	}
-	exec sql commit;
-	
+    return 0;
 	error_handler:
     exec sql rollback;
 		return -1;
