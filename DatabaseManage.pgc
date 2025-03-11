@@ -1,62 +1,47 @@
 #include <stdio.h>
 #include <string.h>
-#include <pgtypes_date.h>  // Для работы с типом date
+#include <pgtypes_date.h>
 #include <time.h>
 #include <stdlib.h>
-
 
 int validate_date_format(const char *date) {
     struct tm tm;
     memset(&tm, 0, sizeof(struct tm));
-
-    // Пытаемся разобрать строку в формате "yyyy-MM-dd"
     if (strptime(date, "%Y-%m-%d", &tm)) {
-        return 1;  // Дата корректна
+        return 1;
     }
-    return 0;  // Дата некорректна
+    return 0;
 }
 
-// Функция для проверки входных данных
 int validate_cortege(const char *isbn, const char *book_name, const char *description, const char *publication_date, const char *author_name) {
-    // Проверка длины ISBN (должен быть ровно 13 символов)
     if (strlen(isbn) != 13) {
         printf("Error: ISBN must have exactly 13 characters.\n");
         return 0;
     }
-
-    // Проверка длины названия книги (не более 255 символов)
     if (strlen(book_name) > 255) {
         printf("Error: Book name must be no more than 255 characters.\n");
         return 0;
     }
-
-    // Проверка формата даты
     if (!validate_date_format(publication_date)) {
         printf("Error: Publication date must be in the format 'yyyy-MM-dd'.\n");
         return 0;
     }
-
-    // Проверка длины имени автора (не более 255 символов)
     if (strlen(author_name) > 255) {
         printf("Error: Author name must be no more than 255 characters.\n");
         return 0;
     }
-
-    // Все проверки пройдены
     return 1;
 }
 
-// Функция для подключения к базе данных
 int connect_to_db(const char *username, const char *password) {
     exec sql begin declare section;
-        const char *conn_str = "library";  // Имя базы данных
+        const char *conn_str = "library";
         const char *user = username;
         const char *pass = password;
     exec sql end declare section;
 
     exec sql whenever sqlerror goto error_handler;
 
-    // Подключение к базе данных
     exec sql connect to :conn_str user :user using :pass;
     printf("Connected to the database.\n");
     return 0;
@@ -67,15 +52,13 @@ error_handler:
 
 int disconnect_from_db(){
     exec sql whenever sqlerror goto error_handler;
-	exec sql disconnect;
+    exec sql disconnect;
     printf("Disconnected from the database.\n");
     return 0;
     error_handler:
         return -1;
 }
 
-
-// Создание базы данных
 int create_db() {
     exec sql whenever sqlerror goto error_handler;
     exec sql call create_db();
@@ -88,7 +71,6 @@ error_handler:
     return -1;
 }
 
-// Удаление базы данных
 int drop_db() {
     exec sql whenever sqlerror goto error_handler;
     exec sql call drop_db();
@@ -101,7 +83,6 @@ error_handler:
     return -1;
 }
 
-// Очистка таблиц
 int clear_db() {
     exec sql whenever sqlerror goto error_handler;
     exec sql call clear_table();
@@ -114,23 +95,21 @@ error_handler:
     return -1;
 }
 
-// Вставка книги
 int insert_book(const char *isbn_inp, const char *book_name_inp, const char *description_inp, const char *publication_date, const char *author_name_inp) {
     if (!validate_cortege(isbn_inp, book_name_inp, description_inp, publication_date, author_name_inp)) {
         return 1;
     }
 
     exec sql begin declare section;
-        char isbn[14];  // ISBN (13 символов + \0)
+        char isbn[14];
         char book_name[256];
-        char description[4096];  // Описание (TEXT)
-        date pub_date;  // Дата публикации
+        char description[4096];
+        date pub_date;
         char author_name[256];
     exec sql end declare section;
 
-    // Копируем данные в переменные ESQL
     strncpy(isbn, isbn_inp, sizeof(isbn) - 1);
-    isbn[sizeof(isbn) - 1] = '\0';  // Убедимся, что строка завершена
+    isbn[sizeof(isbn) - 1] = '\0';
     strncpy(book_name, book_name_inp, sizeof(book_name) - 1);
     book_name[sizeof(book_name) - 1] = '\0';
     strncpy(description, description_inp, sizeof(description) - 1);
@@ -138,15 +117,11 @@ int insert_book(const char *isbn_inp, const char *book_name_inp, const char *des
     strncpy(author_name, author_name_inp, sizeof(author_name) - 1);
     author_name[sizeof(author_name) - 1] = '\0';
 
-    // Преобразуем строку даты в тип date
     pub_date = PGTYPESdate_from_asc((char *)publication_date, NULL);
 
     exec sql whenever sqlerror goto error_handler;
 
-    // Вызов хранимой процедуры
     exec sql call insert_book(:isbn, :book_name, :description, :pub_date, :author_name);
-
-    // Завершаем транзакцию
     exec sql commit;
 
     printf("Book inserted successfully.\n");
@@ -154,59 +129,51 @@ int insert_book(const char *isbn_inp, const char *book_name_inp, const char *des
 
 error_handler:
     printf("Error inserting book: SQLCODE=%d, SQLERRM=%s\n", sqlca.sqlcode, sqlca.sqlerrm.sqlerrmc);
-    exec sql rollback;  // Откатываем транзакцию в случае ошибки
+    exec sql rollback;
     return -1;
 }
 
-// Поиск книг по автору
 char* search_books_by_author_name(const char *author_name) {
     if (strlen(author_name) > 255) {
-        return NULL;  // Возвращаем NULL, если имя автора слишком длинное
+        return NULL;
     }
 
     exec sql begin declare section;
-        char author[256];  // Имя автора
-        int book_id;       // ID книги
-        char isbn[14];     // ISBN
-        char book_name[256];  // Название книги
-        char description[4096];  // Описание
+        char author[256];
+        int book_id;
+        char isbn[14];
+        char book_name[256];
+        char description[4096];
         date pub_date;
-        char goida[256];     // Дата публикации
+        char goida[256];
     exec sql end declare section;
 
-    // Копируем имя автора в переменную ESQL
     strncpy(author, author_name, sizeof(author) - 1);
-    author[sizeof(author) - 1] = '\0';  // Убедимся, что строка завершена
+    author[sizeof(author) - 1] = '\0';
 
-    // Динамически выделяем память для результата
-    char *result = (char *)malloc(1);  // Начальный размер — 1 байт (для '\0')
+    char *result = (char *)malloc(1);
     if (!result) {
         fprintf(stderr, "Memory allocation failed.\n");
         return NULL;
     }
-    result[0] = '\0';  // Инициализируем пустую строку
+    result[0] = '\0';
 
     exec sql whenever sqlerror goto error_handler;
 
-    // Объявляем курсор для выборки данных
     exec sql declare book_cursor cursor for
-        SELECT * FROM search_books_by_author_name(:author);  // Явно указываем тип
+        SELECT * FROM search_books_by_author_name(:author);
 
-    // Открываем курсор
     exec sql open book_cursor;
 
-    // Читаем данные из курсора
     while (1) {
         exec sql fetch book_cursor into :book_id, :isbn, :book_name, :description, :pub_date, :goida;
-        if (sqlca.sqlcode == 100) break;  // Конец данных
+        if (sqlca.sqlcode == 100) break;
         if (sqlca.sqlcode != 0) goto error_handler;
 
-        // Формируем строку с информацией о книге
         char book_info[512];
         snprintf(book_info, sizeof(book_info), "ID: %d, ISBN: %s, Name: %s, Description: %s, Date: %s\n",
                  book_id, isbn, book_name, description, PGTYPESdate_to_asc(pub_date));
 
-        // Увеличиваем размер результата и добавляем информацию о книге
         size_t new_length = strlen(result) + strlen(book_info) + 1;
         result = (char *)realloc(result, new_length);
         if (!result) {
@@ -216,14 +183,13 @@ char* search_books_by_author_name(const char *author_name) {
         strcat(result, book_info);
     }
 
-    // Закрываем курсор
     exec sql close book_cursor;
 
     return result;
 
 error_handler:
     printf("Error searching books: SQLCODE=%d, SQLERRM=%s\n", sqlca.sqlcode, sqlca.sqlerrm.sqlerrmc);
-    free(result);  // Освобождаем память в случае ошибки
+    free(result);
     return NULL;
 }
 
@@ -240,7 +206,7 @@ int update_book_by_id(int book_id, const char *isbn_inp, const char *book_name_i
     char description[4096];
     date pub_date;
     char author_name[256];
-    char pub_date_str[256];  // Временная строка для даты
+    char pub_date_str[256];
     exec sql end declare section;
 
     strncpy(isbn, isbn_inp, sizeof(isbn) - 1);
@@ -252,14 +218,12 @@ int update_book_by_id(int book_id, const char *isbn_inp, const char *book_name_i
     strncpy(author_name, author_name_inp, sizeof(author_name) - 1);
     author_name[sizeof(author_name) - 1] = '\0';
 
-    // Копируем дату во временную строку
     strncpy(pub_date_str, publication_date, sizeof(pub_date_str) - 1);
     pub_date_str[sizeof(pub_date_str) - 1] = '\0';
     pub_date = PGTYPESdate_from_asc(pub_date_str, NULL);
 
     exec sql whenever sqlerror goto error_handler;
 
-    // Вызов хранимой процедуры
     exec sql call update_book(:id, :isbn, :book_name, :description, :pub_date, :author_name);
     exec sql commit;
 
@@ -273,7 +237,7 @@ error_handler:
 }
 
 int delete_book_by_name(const char *book_name) {
-	if(strlen(book_name)>255) return 1;
+    if(strlen(book_name)>255) return 1;
     exec sql begin declare section;
         char name[256];
     exec sql end declare section;
@@ -282,7 +246,6 @@ int delete_book_by_name(const char *book_name) {
 
     exec sql whenever sqlerror goto error_handler;
 
-    // Вызов хранимой процедуры
     exec sql call delete_book_by_name(:name);
     exec sql commit;
     printf("Book deleted successfully.\n");
@@ -293,22 +256,19 @@ error_handler:
     return -1;
 }
 
-
 void grant_user_on_procedure(const char *procedure_name, const char *username) {
     exec sql begin declare section;
-        char proc_name[256];  // Имя процедуры
-        char user[256];       // Имя пользователя
+        char proc_name[256];
+        char user[256];
     exec sql end declare section;
 
-    // Копируем входные данные в переменные ESQL
     strncpy(proc_name, procedure_name, sizeof(proc_name) - 1);
-    proc_name[sizeof(proc_name) - 1] = '\0';  // Убедимся, что строка завершена
+    proc_name[sizeof(proc_name) - 1] = '\0';
     strncpy(user, username, sizeof(user) - 1);
     user[sizeof(user) - 1] = '\0';
 
     exec sql whenever sqlerror goto error_handler;
 
-    // Вызов хранимой процедуры
     exec sql call grant_user_on_procedure(:proc_name, :user);
     exec sql commit;
     printf("Procedure '%s' granted to user '%s' successfully.\n", proc_name, user);
@@ -321,13 +281,12 @@ error_handler:
 
 void grant_user_on_function(const char *procedure_name, const char *username) {
     exec sql begin declare section;
-        char proc_name[256];  // Имя процедуры
-        char user[256];       // Имя пользователя
+        char proc_name[256];
+        char user[256];
     exec sql end declare section;
 
-    // Копируем входные данные в переменные ESQL
     strncpy(proc_name, procedure_name, sizeof(proc_name) - 1);
-    proc_name[sizeof(proc_name) - 1] = '\0';  // Убедимся, что строка завершена
+    proc_name[sizeof(proc_name) - 1] = '\0';
     strncpy(user, username, sizeof(user) - 1);
     user[sizeof(user) - 1] = '\0';
 
@@ -336,7 +295,7 @@ void grant_user_on_function(const char *procedure_name, const char *username) {
     exec sql call grant_user_on_function(:proc_name, :user);
     exec sql commit;
     printf("Procedure '%s' granted to user '%s' successfully.\n", proc_name, user);
-    
+
     return;
 
 error_handler:
@@ -344,48 +303,47 @@ error_handler:
     printf("Error granting procedure: SQLCODE=%d, SQLERRM=%s\n", sqlca.sqlcode, sqlca.sqlerrm.sqlerrmc);
 }
 
-
 int create_user(const char* login,const char* password, bool create_db_right, bool delete_db_right,bool clear_db_right,
 bool insert_right, bool search_right, bool update_right, bool delete_right, bool create_user_right){
-	exec sql whenever sqlerror goto error_handler;
-	exec sql begin declare section;
+    exec sql whenever sqlerror goto error_handler;
+    exec sql begin declare section;
         char name[256];
-		char user_password[256];
+        char user_password[256];
     exec sql end declare section;
         strncpy(name, login, sizeof(name) - 1);
-        name[sizeof(name) - 1] = '\0';  // Убедимся, что строка завершена
+        name[sizeof(name) - 1] = '\0';
         strncpy(user_password, password, sizeof(user_password) - 1);
         user_password[sizeof(user_password) - 1] = '\0';
-	exec sql call create_user(:name, :user_password);
+    exec sql call create_user(:name, :user_password);
     exec sql commit;
-	if(create_db_right){
-		grant_user_on_procedure("create_db", login);
-	}
-	if(delete_db_right){
-		grant_user_on_procedure("drop_db", login);
-	}
-	if(clear_db_right){
-		grant_user_on_procedure("clear_table", login);
-	}
-	if(insert_right){
-		grant_user_on_procedure("insert_book", login);
-	}
-	if(search_right){
-		grant_user_on_procedure("search_books_by_author_name", login);
-	}
-	if(update_right){
-		grant_user_on_procedure("update_book", login);
-	}
-	if(delete_right){
-		grant_user_on_procedure("delete_book_by_name", login);
-	}
-	if(create_user_right){
-		grant_user_on_procedure("create_user", login);
-		grant_user_on_procedure("grant_user_on_function", login);
-		grant_user_on_procedure("grant_user_on_procedure", login);
-	}
+    if(create_db_right){
+        grant_user_on_procedure("create_db", login);
+    }
+    if(delete_db_right){
+        grant_user_on_procedure("drop_db", login);
+    }
+    if(clear_db_right){
+        grant_user_on_procedure("clear_table", login);
+    }
+    if(insert_right){
+        grant_user_on_procedure("insert_book", login);
+    }
+    if(search_right){
+        grant_user_on_procedure("search_books_by_author_name", login);
+    }
+    if(update_right){
+        grant_user_on_procedure("update_book", login);
+    }
+    if(delete_right){
+        grant_user_on_procedure("delete_book_by_name", login);
+    }
+    if(create_user_right){
+        grant_user_on_procedure("create_user", login);
+        grant_user_on_procedure("grant_user_on_function", login);
+        grant_user_on_procedure("grant_user_on_procedure", login);
+    }
     return 0;
-	error_handler:
+    error_handler:
     exec sql rollback;
-		return -1;
+        return -1;
 }
